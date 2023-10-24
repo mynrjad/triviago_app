@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What programming language is primarily used for Android app development?",
+    "options": ["Java", "Python", "C++", "Swift"],
+    "correctAnswer": "Java"
+  },
+  {
+    "question": "What is the official integrated development environment (IDE) for Android app development?",
+    "options": ["Eclipse", "Visual Studio Code", "Android Studio", "Xcode"],
+    "correctAnswer": "Android Studio"
+  },
+  {
+    "question": "What is an APK in the context of Android apps?",
+    "options": ["Android Program Kit", "Android Package", "Android Keyfile", "Android Application Manifest"],
+    "correctAnswer": "Android Package"
+  },
+  {
+    "question": "What is the minimum required Android version for the Android Gradle Plugin (AGP) 7.0.0?",
+    "options": ["Android 2.3 (Gingerbread)", "Android 4.0 (Ice Cream Sandwich)", "Android 4.4 (KitKat)", "Android 5.0 (Lollipop)"],
+    "correctAnswer": "Android 5.0 (Lollipop)"
+  },
+  {
+    "question": "Which Android component is responsible for managing app UI and user interactions?",
+    "options": ["Service", "BroadcastReceiver", "Activity", "ContentProvider"],
+    "correctAnswer": "Activity"
+  },
+  {
+    "question": "What does ADB stand for in Android development?",
+    "options": ["Android Debug Bridge", "Android Development Bundle", "Application Debugging Tool", "Android Device Browser"],
+    "correctAnswer": "Android Debug Bridge"
+  },
+  {
+    "question": "In Android development, what is the purpose of an Intent?",
+    "options": ["To store user preferences", "To manage database connections", "To initiate communication between components", "To define application icons"],
+    "correctAnswer": "To initiate communication between components"
+  },
+  {
+    "question": "Which XML file is used to define the user interface of an Android app?",
+    "options": ["AndroidManifest.xml", "build.gradle", "styles.xml", "activity_main.xml"],
+    "correctAnswer": "activity_main.xml"
+  },
+  {
+    "question": "What is the term for a lightweight data storage solution provided by Android for small, key-value pairs?",
+    "options": ["SharedPreferences", "SQLite Database", "ContentProvider", "JSON Storage"],
+    "correctAnswer": "SharedPreferences"
+  },
+  {
+    "question": "Which Android component is used for long-running background tasks and does not have a user interface?",
+    "options": ["Activity", "Service", "Fragment", "Intent"],
+    "correctAnswer": "Service"
+  },
+  {
+    "question": "What is the official database solution provided by Android for structured data storage?",
+    "options": ["SQLite", "NoSQL", "MySQL", "Firebase Realtime Database"],
+    "correctAnswer": "SQLite"
+  },
+  {
+    "question": "What is the primary purpose of the AndroidManifest.xml file?",
+    "options": ["To define the app's user interface", "To specify the app's entry point", "To store user preferences", "To manage database connections"],
+    "correctAnswer": "To specify the app's entry point"
+  },
+  {
+    "question": "Which Android API level introduced the Material Design guidelines for UI design?",
+    "options": ["API Level 10 (Gingerbread)", "API Level 14 (Ice Cream Sandwich)", "API Level 21 (Lollipop)", "API Level 23 (Marshmallow)"],
+    "correctAnswer": "API Level 21 (Lollipop)"
+  },
+  {
+    "question": "What is the purpose of the Android Support Library (AndroidX)?",
+    "options": ["To replace Java in Android development", "To provide backward-compatible features and UI components", "To manage device-specific hardware drivers", "To secure network communication"],
+    "correctAnswer": "To provide backward-compatible features and UI components"
+  },
+  {
+    "question": "Which layout manager is commonly used to create a scrollable list of items in Android?",
+    "options": ["RelativeLayout", "GridLayout", "LinearLayout", "RecyclerView"],
+    "correctAnswer": "RecyclerView"
+  },
+  {
+    "question": "In Android, what is the purpose of the Gradle build system?",
+    "options": ["To design user interfaces", "To write code for the app", "To build and manage the app's dependencies and resources", "To test the app"],
+    "correctAnswer": "To build and manage the app's dependencies and resources"
+  },
+  {
+    "question": "What is the term for the process of converting your app's source code into a format that can be executed on an Android device?",
+    "options": ["Compiling", "Debugging", "Designing", "Analyzing"],
+    "correctAnswer": "Compiling"
+  },
+  {
+    "question": "What tool is commonly used for profiling and analyzing the performance of Android apps?",
+    "options": ["Android Debugger (ADB)", "Android Monitor", "Logcat", "Android Profiler"],
+    "correctAnswer": "Android Profiler"
+  },
+  {
+    "question": "Which file format is used for storing localized strings in Android apps?",
+    "options": ["JSON", "XML", "CSV", "YML"],
+    "correctAnswer": "XML"
+  },
+  {
+    "question": "What is the Android Testing Support Library used for?",
+    "options": ["Playing games on Android devices", "Writing unit and UI tests for Android apps", "Managing app permissions", "Providing emojis for text messages"],
+    "correctAnswer": "Writing unit and UI tests for Android apps"
+    }
+]

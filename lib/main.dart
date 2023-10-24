@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:untitled/bloc/bloc_game.dart';
 import 'package:untitled/screens/screen_exit.dart';
 import 'package:untitled/screens/screen_game.dart';
 import 'package:untitled/screens/screen_menu.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      BlocProvider(
+        create: (context) => GameBloc(),
+        child: const MyApp(),
+      ),
+    );
 
 final GoRouter goRouter = GoRouter(
-  //Routes
   routes: [
     GoRoute(
       path: '/',
@@ -18,7 +24,7 @@ final GoRouter goRouter = GoRouter(
         GoRoute(
           path: 'game',
           builder: (BuildContext context, GoRouterState state) {
-            return const GameScreen();
+            return const GameScreen(); // No need to wrap it in BlocProvider now
           },
         ),
         GoRoute(
@@ -33,8 +39,8 @@ final GoRouter goRouter = GoRouter(
 );
 
 class MyApp extends StatelessWidget {
-  /// Constructs a [MyApp]
-  const MyApp({super.key});
+  const MyApp({Key? key})
+      : super(key: key); // Note: updated 'super.key' to 'key'
 
   @override
   Widget build(BuildContext context) {

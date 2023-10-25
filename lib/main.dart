@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: goRouter,
       theme: ThemeData(
         fontFamily: 'Inter',

@@ -22,19 +22,28 @@ class GameInitial extends GameState {
 class GameLoaded extends GameState {
   const GameLoaded(
       int currentQuestionIndex, List<Map<String, dynamic>> questions, int score)
-      : super(currentQuestionIndex: currentQuestionIndex, questions: questions);
+      : super(
+            currentQuestionIndex: currentQuestionIndex,
+            questions: questions,
+            score: score); // <-- Pass the score here
 }
 
 class CorrectAnswer extends GameState {
   const CorrectAnswer(
-      int currentQuestionIndex, List<Map<String, dynamic>> questions)
-      : super(currentQuestionIndex: currentQuestionIndex, questions: questions);
+      int currentQuestionIndex, List<Map<String, dynamic>> questions, int score)
+      : super(
+            currentQuestionIndex: currentQuestionIndex,
+            questions: questions,
+            score: score); // <-- Make sure to pass the score here
 }
 
 class IncorrectAnswer extends GameState {
   const IncorrectAnswer(
-      int currentQuestionIndex, List<Map<String, dynamic>> questions)
-      : super(currentQuestionIndex: currentQuestionIndex, questions: questions);
+      int currentQuestionIndex, List<Map<String, dynamic>> questions, int score)
+      : super(
+            currentQuestionIndex: currentQuestionIndex,
+            questions: questions,
+            score: score); // <-- Make sure to pass the score here
 }
 
 class GameOver extends GameState {

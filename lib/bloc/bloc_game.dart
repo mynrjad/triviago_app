@@ -13,6 +13,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   GameBloc() : super(GameInitial()) {
     on<StartGame>((event, emit) async {
+      if (kDebugMode) {
+        print("StartGame event triggered");
+      }
+
       try {
         allQuestions = await loadTriviaQuestions();
         allQuestions.shuffle(); // Shuffle questions
@@ -37,12 +41,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     });
 
     on<AnswerQuestion>((event, emit) {
+      if (kDebugMode) {
+        print("AnswerQuestion event triggered");
+      }
       if (selectedQuestions[currentQuestionIndex]['correctAnswer'] ==
           event.answer) {
         score++; // Increment score
-        emit(CorrectAnswer(currentQuestionIndex, selectedQuestions));
+        if (kDebugMode) {
+          print("Correct answer! Score: $score");
+        }
+        emit(CorrectAnswer(currentQuestionIndex, selectedQuestions,
+            score)); // <-- Pass the score
       } else {
-        emit(IncorrectAnswer(currentQuestionIndex, selectedQuestions));
+        if (kDebugMode) {
+          print("Incorrect answer! Score remains: $score");
+        } // Add this line
+        emit(IncorrectAnswer(currentQuestionIndex, selectedQuestions,
+            score)); // <-- Pass the score
       }
 
       Future.delayed(const Duration(seconds: 2), () {

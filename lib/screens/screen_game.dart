@@ -22,19 +22,30 @@ class _GameScreenState extends State<GameScreen> {
       isButtonDisabled = true;
     });
 
+    // Determine the correctness of the given answer
     final correctAnswer =
         state.questions[state.currentQuestionIndex]['correctAnswer'];
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(option == correctAnswer ? 'Correct!' : 'Wrong!'),
-        backgroundColor: option == correctAnswer ? Colors.green : Colors.red,
-      ),
-    );
+    if (option == correctAnswer) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Correct!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Wrong!'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+
+    // Add the AnswerQuestion event with the given option
+    gameBloc.add(AnswerQuestion(answer: option));
 
     await Future.delayed(Duration(seconds: 2));
-
-    gameBloc.add(NextQuestion());
 
     setState(() {
       isButtonDisabled = false;

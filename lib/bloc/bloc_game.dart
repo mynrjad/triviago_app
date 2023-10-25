@@ -6,51 +6,45 @@ import 'bloc_game_event.dart';
 import 'bloc_game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  late List<Map<String, dynamic>> questions;
+  late List<Map<String, dynamic>> allQuestions;
+  late List<Map<String, dynamic>> selectedQuestions;
   int currentQuestionIndex = 0;
   int score = 0;
 
   GameBloc() : super(GameInitial()) {
-    if (kDebugMode) {
-      print("GameBloc initialized");
-    }
     on<StartGame>((event, emit) async {
       try {
-        questions = await loadTriviaQuestions();
-        if (kDebugMode) {
-          print("Questions loaded: $questions");
-        }
+        allQuestions = await loadTriviaQuestions();
+        allQuestions.shuffle(); // Shuffle questions
+        selectedQuestions = allQuestions.take(10).toList(); // Take the first 10
         currentQuestionIndex = 0;
-        emit(GameLoaded(currentQuestionIndex, questions));
-        if (kDebugMode) {
-          print("Emitting GameLoaded state");
-        }
+        score = 0; // Reset score
+        emit(GameLoaded(currentQuestionIndex, selectedQuestions, score));
       } catch (e) {
         if (kDebugMode) {
           print("Error loading questions: $e");
         }
-        // Optionally, emit an error state
       }
     });
 
     on<NextQuestion>((event, emit) {
-      if (currentQuestionIndex < questions.length - 1) {
+      if (currentQuestionIndex < selectedQuestions.length - 1) {
         currentQuestionIndex++;
-        emit(GameLoaded(currentQuestionIndex, questions));
+        emit(GameLoaded(currentQuestionIndex, selectedQuestions, score));
       } else {
         emit(GameOver(score: score));
       }
     });
 
     on<AnswerQuestion>((event, emit) {
-      if (questions[currentQuestionIndex]['correctAnswer'] == event.answer) {
-        score++; // <-- Increment the score here
-        emit(CorrectAnswer(currentQuestionIndex, questions));
+      if (selectedQuestions[currentQuestionIndex]['correctAnswer'] ==
+          event.answer) {
+        score++; // Increment score
+        emit(CorrectAnswer(currentQuestionIndex, selectedQuestions));
       } else {
-        emit(IncorrectAnswer(currentQuestionIndex, questions));
+        emit(IncorrectAnswer(currentQuestionIndex, selectedQuestions));
       }
 
-      // Proceed to next question after a small delay
       Future.delayed(const Duration(seconds: 2), () {
         add(NextQuestion());
       });

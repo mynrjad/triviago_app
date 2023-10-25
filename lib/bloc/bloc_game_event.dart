@@ -6,5 +6,6 @@ class NextQuestion extends GameEvent {}
 
 class AnswerQuestion extends GameEvent {
   final String answer;
-  AnswerQuestion(this.answer);
+
+  AnswerQuestion({required this.answer});
 }

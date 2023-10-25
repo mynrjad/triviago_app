@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../bloc/bloc_game.dart';
 import '../bloc/bloc_game_event.dart';
 import '../bloc/bloc_game_state.dart';
@@ -13,18 +12,63 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  String? selectedOption;
+  bool isButtonDisabled = false;
+  String lastKnownQuestion = '';
+  List<String> lastKnownOptions = [];
+
+  Future<void> handleAnswer(
+      GameBloc gameBloc, String option, GameState state) async {
+    setState(() {
+      isButtonDisabled = true;
+    });
+
+    final correctAnswer =
+        state.questions[state.currentQuestionIndex]['correctAnswer'];
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(option == correctAnswer ? 'Correct!' : 'Wrong!'),
+        backgroundColor: option == correctAnswer ? Colors.green : Colors.red,
+      ),
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+
+    gameBloc.add(NextQuestion());
+
+    setState(() {
+      isButtonDisabled = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameBloc, GameState>(
+    return BlocConsumer<GameBloc, GameState>(
+      listener: (context, state) {
+        if (state is GameOver) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Game Over'),
+              content: Text('Your Score is ${state.score}'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context); // Navigate back to the main menu
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
       builder: (context, state) {
-        String question = '';
-        List<String> options = [];
-
         if (state is GameLoaded) {
-          question = state.questions[state.currentQuestionIndex]['question'];
-          options = List<String>.from(
+          lastKnownQuestion =
+              state.questions[state.currentQuestionIndex]['question'];
+          lastKnownOptions = List<String>.from(
               state.questions[state.currentQuestionIndex]['options'] ?? []);
         }
 
@@ -47,11 +91,11 @@ class _GameScreenState extends State<GameScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      question,
+                      lastKnownQuestion,
                       style: const TextStyle(fontSize: 24),
                     ),
                     const SizedBox(height: 20),
-                    ...options
+                    ...lastKnownOptions
                         .map(
                           (option) => Padding(
                             padding:
@@ -60,36 +104,14 @@ class _GameScreenState extends State<GameScreen> {
                               elevation: 2.0,
                               borderRadius: BorderRadius.circular(12),
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () async {
-                                  // Make it asynchronous
-                                  final correctAnswer = state
-                                          .questions[state.currentQuestionIndex]
-                                      ['correctAnswer'];
-
-                                  if (option == correctAnswer) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Correct!'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Wrong!'),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  }
-
-                                  // Add the delay here
-                                  await Future.delayed(
-                                      const Duration(seconds: 2));
-
-                                  // After the delay, move on to the next question
-                                  context.read<GameBloc>().add(NextQuestion());
-                                },
+                                onTap: isButtonDisabled
+                                    ? null
+                                    : () async {
+                                        await handleAnswer(
+                                            context.read<GameBloc>(),
+                                            option,
+                                            state);
+                                      },
                                 child: Container(
                                   padding: const EdgeInsets.all(16.0),
                                   decoration: BoxDecoration(

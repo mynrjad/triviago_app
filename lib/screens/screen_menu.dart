@@ -62,9 +62,7 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
                 onPressed: () {
-                  context.go('/game');
-                  // Add the StartGame event trigger here.
-                  context.read<GameBloc>().add(StartGame());
+                  context.go('/camera'); // Navigate to the CameraCaptureScreen
                 },
                 child: const Text(
                   'Start Game',

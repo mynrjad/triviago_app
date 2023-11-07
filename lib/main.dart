@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +6,7 @@ import 'package:untitled/bloc/bloc_game.dart';
 import 'package:untitled/screens/screen_exit.dart';
 import 'package:untitled/screens/screen_game.dart';
 import 'package:untitled/screens/screen_menu.dart';
+import 'package:untitled/screens/CameraCaptureScreen.dart';
 
 void main() => runApp(
       BlocProvider(
@@ -24,13 +26,21 @@ final GoRouter goRouter = GoRouter(
         GoRoute(
           path: 'game',
           builder: (BuildContext context, GoRouterState state) {
-            return const GameScreen(); // No need to wrap it in BlocProvider now
+            // Retrieve the XFile from the extra
+            final imageFile = state.extra as XFile?;
+            return GameScreen(imageFile: imageFile);
           },
         ),
         GoRoute(
           path: 'exit',
           builder: (BuildContext context, GoRouterState state) {
             return const ExitScreen();
+          },
+        ),
+        GoRoute(
+          path: 'camera',
+          builder: (BuildContext context, GoRouterState state) {
+            return const CameraCaptureScreen();
           },
         ),
       ],

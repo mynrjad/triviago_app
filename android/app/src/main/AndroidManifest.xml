@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Permissions for the camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- Permissions for the camera to use microphone if you're planning to record video -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:label="untitled"
         android:name="${applicationName}"

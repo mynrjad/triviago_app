@@ -1,12 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linear_timer/linear_timer.dart'; // <- Import the linear_timer package
 import '../bloc/bloc_game.dart';
 import '../bloc/bloc_game_event.dart';
 import '../bloc/bloc_game_state.dart';
+import 'dart:io';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  final XFile? imageFile; // Change type to XFile
+  const GameScreen({Key? key, this.imageFile}) : super(key: key);
 
   @override
   _GameScreenState createState() => _GameScreenState();
@@ -53,6 +56,20 @@ class _GameScreenState extends State<GameScreen> {
     setState(() {
       isButtonDisabled = false;
     });
+  }
+
+  Widget _buildAvatar() {
+    if (widget.imageFile != null) {
+      return CircleAvatar(
+        backgroundImage: FileImage(File(widget.imageFile!.path)),
+        radius: 40,
+      );
+    } else {
+      return const CircleAvatar(
+        child: Icon(Icons.person),
+        radius: 40,
+      );
+    }
   }
 
   @override
@@ -116,6 +133,8 @@ class _GameScreenState extends State<GameScreen> {
                     minHeight: 5.0, // Optional: Adjust based on your preference
                   ),
                 ),
+                const SizedBox(height: 20),
+                _buildAvatar(), // Display the avatar
                 // Rest of your game UI
                 Expanded(
                   child: Center(
